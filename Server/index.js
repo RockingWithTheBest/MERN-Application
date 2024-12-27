@@ -95,8 +95,26 @@ app.delete('/currency/:id', async (req, res) => {
 
 //Cashier
 app.get('/cashier', async(req, res) => {
+    const { full_name, sortBy, sortOrder } = req.query;
+
+    // Build the filter object
+    const filter = {};
+    if (full_name) {
+        filter.full_name = { $regex: new RegExp(full_name, 'i') }; // Case-insensitive search
+    }
+
+    // Build the sorting object
+    const sort = {};
+    if (sortBy) {
+        const validSortFields = ['full_name'];
+        if (validSortFields.includes(sortBy)) {
+            sort[sortBy] = sortOrder === 'desc' ? -1 : 1; // -1 for descending, 1 for ascending
+        } else {
+            return res.status(400).json({ error: "Invalid sort field" });
+        }
+    }
     try{
-        const cashier = await Cashier.find();
+        const cashier = await Cashier.find(filter).sort(sort);
         res.status(201).json({ status: 'success', cashier});
     }
     catch(err){
@@ -113,6 +131,7 @@ app.post('/cashier', async (req, res) => {
                 password: req.body.password
             }
         )
+        res.status(201).json({status: 'ok', cashier});
     }
     catch(err){
         console.error(err);
@@ -215,7 +234,7 @@ app.put('/client/:id', async(req, res) => {
                 runValidators: true
             }
         )
-        res.status(200).json({status:":success", client})
+        res.status(200).json( client)
     }
     catch(err){
         console.error(err);
@@ -257,7 +276,27 @@ app.post('/transaction', async (req, res) => {
 
 app.get('/transaction', async(req, res) => {
     try{
-        const transaction = await Transaction.find();
+        const filters = {};
+
+        if(req.query.sold_amount_currency){
+            filters.sold_amount_currency = req.query.sold_amount_currency;
+        }
+        if(req.query.bought_amount_currency){
+            filters.bought_amount_currency = req.query.bought_amount_currency;
+        }
+        if(req.query.transaction_date){
+            filters.transaction_date = req.query.transaction_date;
+        }
+        if(req.query.transaction_time){
+            filters.transaction_time = req.query.transaction_time;
+        }
+        if (req.query.sold_amount) {
+            filters.sold_amount = req.query.sold_amount;
+        }
+        if (req.query.bought_amount) {
+            filters.bought_amount = req.query.bought_amount;
+        }
+        const transaction = await Transaction.find(filters);
         res.status(201).json({ status: 'ok', transaction });
     }
     catch(err){

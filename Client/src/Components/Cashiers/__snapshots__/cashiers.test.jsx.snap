@@ -1,0 +1,86 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Cashier component > cahiers component 1`] = `
+<div>
+  <div
+    class="client"
+  >
+    <h1>
+      Cashier
+    </h1>
+    <div
+      class="filter"
+    >
+      <form
+        action=""
+        class="form-submit"
+      >
+        <div>
+          <label
+            for="fullname"
+          >
+            Full Name : 
+          </label>
+          <input
+            class="fullname"
+            id="fullname"
+            type="text"
+            value=""
+          />
+          <label
+            for="password"
+          >
+            Password : 
+          </label>
+          <input
+            class="fullname"
+            id="password"
+            type="text"
+            value=""
+          />
+        </div>
+        <div>
+          <button
+            class="btn-submit"
+            type="submit"
+          >
+            Add Client
+          </button>
+        </div>
+      </form>
+      <div>
+        <label>
+          Filter by Full Name : 
+        </label>
+        <input
+          class="fullname"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="sc-eUlrpB hZZlND"
+    >
+      <div
+        class="sc-hJRrWL yGWof"
+      >
+        <div
+          class="sc-blHHSb dknajr rdt_Table"
+          role="table"
+        >
+          <div
+            class="sc-hbtGpV ejfNUe"
+          >
+            <div
+              style="padding: 24px;"
+            >
+              There are no records to display
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
